@@ -12,27 +12,45 @@
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossorigin="anonymous"></script>
   <style>
-    img#valla{
-      height: 250px;
-      margin-bottom: 50px;
+    body{
+      background: url(img/fondo.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 500px;
     }
     div.casas{
       display: inline-block;
+    }
+    audio{
+      display: none;
+    }
+    #valla{
+      width: 1050px;
+      height: 250px;
+      align-items: center;
+      margin-left: auto;
+      margin-right: auto;
     }
     .casas{
       width: 200px;
       height: 150px;
       display: inline-block;
-      border: 3px solid black;
+      border: 3px solid white;
       margin-left: auto;
       margin-right: auto;
       text-align: center;
       align-items: center;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7));
+      box-shadow: 0 0 10px rgba(207, 205, 205, 0.7);
+      filter: drop-shadow(0 2px 5px rgba(241, 239, 239, 0.7));
+    }
+    #info-game{
+      margin-top: 30px;
+      color: white;
+      font-size: 18px;
+      filter: drop-shadow(0 2px 5px rgba(241, 239, 239, 0.7));
     }
     h3{
-      color:white;
+      color:peru;
     }
 
 
@@ -40,17 +58,18 @@
 </head>
 <body>
   <div class="container">
+    
+    <audio controls autoplay>
+      <source src="snd/game-thrones-song.mp3" type="audio/mpeg">
+    </audio>
 
-    <div class="row">
-      <img id="valla" src="img/game-of-thrones-logo-831901C9DA-seeklogo.com.png" alt="">
-    </div>
+    <div><img id="valla" src="img/game-of-thrones-logo-831901C9DA-seeklogo.com.png" alt=""></div>
 
     <div id="gamelote" class="row">
-        <div class="col col-3"><img id="stark" class="casas" src="img/stark.jpg" alt=""></div>
-        <div class="col col-3"><img id="targaryen" class="casas" src="img/targaryen.jpg" alt=""></div>
-        <div class="col col-3"><img id="lannister" class="casas" src="img/lannister.jpg" alt=""></div>
-        <div class="col col-3"><img id="baratheon" class="casas" src="img/baratheon.png" alt=""></div>
-      </div>
+        <div class="col col-3"><img id="362" class="casas" src="img/stark.jpg" alt=""></div>
+        <div class="col col-3"><img id="378" class="casas" src="img/targaryen.jpg" alt=""></div>
+        <div class="col col-3"><img id="229" class="casas" src="img/lannister.jpg" alt=""></div>
+        <div class="col col-3"><img id="17" class="casas" src="img/baratheon.png" alt=""></div>
     </div>
 
     <div  id="info-game" class="row"></div>
@@ -60,57 +79,22 @@
 <script>
 
 $(document).ready(function(){
-    
-    $('#stark').on('click', function(){
-      $.get('https://anapioficeandfire.com/api/houses/362', function(res){
-        //console.log(res);
+  
+    $('.casas').on('click', function(){
+      var ngame = $(this).attr("id");
+      $(this).animate({left: '250px', height: '160px', width: '210px'});
+      $.get('https://anapioficeandfire.com/api/houses/'+ ngame , function(res){
+        console.log(res);
         $('#info-game').html(`
-          <div class="col col-6 offset-3 bg-secondary mt-4">
+          <div class="col col-8 offset-2 bg-dark mt-4">
           <h3>${res.name}</h3>
           <p>Words: ${res.words}</p>
-          <p>Titles ${res.titles}</p>
-        `);
-      }, "json");
-    });
-
-    $('#targaryen').on('click', function(){
-      $.get('https://anapioficeandfire.com/api/houses/378', function(res){
-        //console.log(res);
-        $('#info-game').html(`
-          <div class="col col-6 offset-3 bg-secondary mt-4">
-          <h3>${res.name}</h3>
-          <p>Words: ${res.words}</p>
-          <p>Titles ${res.titles}</p>
-        `);
-      }, "json");
-    });
-
-    $('#lannister').on('click', function(){
-      $.get('https://anapioficeandfire.com/api/houses/229', function(res){
-        //console.log(res);
-        $('#info-game').html(`
-          <div class="col col-6 offset-3 bg-secondary mt-4">
-          <h3>${res.name}</h3>
-          <p>Words: ${res.words}</p>
-          <p>Titles ${res.titles}</p>
-        `);
-      }, "json");
-    });
-
-    $('#baratheon').on('click', function(){
-      $.get('https://anapioficeandfire.com/api/houses/17', function(res){
-        //console.log(res);
-        $('#info-game').html(`
-          <div class="col col-6 offset-3 bg-secondary mt-4">
-          <h3>${res.name}</h3>
-          <p>Words: ${res.words}</p>
-          <p>Titles ${res.titles}</p>
+          <p>Titles: ${res.titles}</p>
         `);
       }, "json");
     });
 
   });
-
 
 </script>
 
